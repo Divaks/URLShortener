@@ -1,0 +1,15 @@
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/bin/Debug/net9.0/UrlShortener.Application.deps.json
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/bin/Debug/net9.0/UrlShortener.Application.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/bin/Debug/net9.0/UrlShortener.Application.pdb
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/bin/Debug/net9.0/UrlShortener.Core.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/bin/Debug/net9.0/UrlShortener.Core.pdb
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.csproj.AssemblyReference.cache
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.AssemblyInfoInputs.cache
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.AssemblyInfo.cs
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.csproj.CoreCompileInputs.cache
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShort.95A5A48A.Up2Date
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/refint/UrlShortener.Application.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.pdb
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/ref/UrlShortener.Application.dll

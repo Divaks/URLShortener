@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Url Shortener";
+}
+
+<div class="text-center">
+    <h1 class="display-4">URL Shortener</h1>
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="card mt-4 p-4 shadow-sm">
+            <div class="input-group mb-3">
+                <input type="text" id="originalUrlInput" class="form-control" placeholder="Вставте довге посилання тут..." aria-label="Original URL">
+                <button class="btn btn-primary" type="button" onclick="shortenUrl()">Скоротити</button>
+            </div>
+            <div id="resultMessage" class="mt-2 text-success fw-bold"></div>
+        </div>
+
+        <h3 class="mt-5 text-start">Моя історія</h3>
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Короткий код</th>
+                    <th>Оригінальний URL</th>
+                    <th>Дата створення</th>
+                    <th>Дії</th> </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4">
+            Будь ласка, <a asp-controller="Account" asp-action="Login">увійдіть</a> або <a asp-controller="Account" asp-action="Register">зареєструйтесь</a>, щоб скорочувати посилання.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // 1. Функція завантаження історії
+        async function loadHistory() {
+            const response = await fetch('/api/url/history');
+            
+            if (response.ok) {
+                const data = await response.json();
+                const tableBody = document.getElementById('historyTableBody');
+                tableBody.innerHTML = ''; // Чистимо таблицю перед малюванням
+
+                data.forEach(item => {
+                    // Формуємо повне коротке посилання (поточний хост + код)
+                    const shortLink = `${window.location.origin}/api/url/${item.shortCode}`;
+                    
+                    const row = `
+                        <tr>
+                            <td><a href="${shortLink}" target="_blank">${item.shortCode}</a></td>
+                            <td class="text-truncate" style="max-width: 300px;">${item.originalUrl}</td>
+                            <td>${new Date(item.dateCreated).toLocaleString()}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${shortLink}')">Copy</button>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+        }
+
+        // 2. Функція скорочення
+        async function shortenUrl() {
+            const input = document.getElementById('originalUrlInput');
+            const url = input.value;
+
+            if (!url) {
+                alert("Введіть посилання!");
+                return;
+            }
+
+            const response = await fetch('/api/url/shorten', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(url) // Відправляємо просто рядок, бо API приймає [FromBody] string
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('resultMessage').innerText = `Готово! Код: ${result.shortCode}`;
+                input.value = ''; // Чистимо поле
+                loadHistory(); // Оновлюємо таблицю
+            } else {
+                alert("Помилка при скороченні. Перевірте URL.");
+            }
+        }
+
+        // Запускаємо завантаження історії при старті сторінки (тільки якщо юзер залогінений)
+        @if (User.Identity.IsAuthenticated)
+        {
+            <text>loadHistory();</text>
+        }
+    </script>
+}

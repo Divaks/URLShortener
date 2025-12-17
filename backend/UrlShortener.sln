@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Core", "UrlShortener.Core\UrlShortener.Core.csproj", "{63C52B72-7EEE-4022-A4D8-D30DFF1B8E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Application", "UrlShortener.Application\UrlShortener.Application.csproj", "{611F0943-0447-49B0-B59F-0983B33B278C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Infrastructure", "UrlShortener.Infrastructure\UrlShortener.Infrastructure.csproj", "{C9F3E7B6-9ED7-49EE-BD97-0F0821780D10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Web", "UrlShortener.Web\UrlShortener.Web.csproj", "{4B978B2D-6D6F-41BD-B94E-3EA571C94A35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63C52B72-7EEE-4022-A4D8-D30DFF1B8E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C52B72-7EEE-4022-A4D8-D30DFF1B8E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C52B72-7EEE-4022-A4D8-D30DFF1B8E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C52B72-7EEE-4022-A4D8-D30DFF1B8E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611F0943-0447-49B0-B59F-0983B33B278C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611F0943-0447-49B0-B59F-0983B33B278C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611F0943-0447-49B0-B59F-0983B33B278C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611F0943-0447-49B0-B59F-0983B33B278C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9F3E7B6-9ED7-49EE-BD97-0F0821780D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9F3E7B6-9ED7-49EE-BD97-0F0821780D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9F3E7B6-9ED7-49EE-BD97-0F0821780D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9F3E7B6-9ED7-49EE-BD97-0F0821780D10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B978B2D-6D6F-41BD-B94E-3EA571C94A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B978B2D-6D6F-41BD-B94E-3EA571C94A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B978B2D-6D6F-41BD-B94E-3EA571C94A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B978B2D-6D6F-41BD-B94E-3EA571C94A35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

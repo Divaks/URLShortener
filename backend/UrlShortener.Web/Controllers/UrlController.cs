@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.Core.Entities;
 using UrlShortener.Core.Interfaces;
+using UrlShortener.Web.Models;
 
 namespace UrlShortener.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class UrlController : ControllerBase
 {
     private readonly IUrlService _urlService;
@@ -21,16 +23,25 @@ public class UrlController : ControllerBase
     }
 
     [HttpPost("shorten")]
-    [Authorize]
-    public async Task<IActionResult> Shorten([FromBody] string originalUrl)
+    public async Task<IActionResult> Shorten([FromBody] CreateUrlRequest request)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(request.OriginalUrl))
+        {
+            return BadRequest("URL cannot be empty.");
+        }
 
-        var user = await _userManager.FindByIdAsync(userId!);
+        var user = await _userManager.GetUserAsync(User);
 
-        var shortCode = await _urlService.ShortenUrlAsync(originalUrl, user);
+        var record = await _urlService.ShortenUrlAsync(request.OriginalUrl, user);
         
-        return Ok(new { shortCode });
+        return Ok(new 
+        { 
+            id = record.Id,
+            originalUrl = record.OriginalUrl,
+            shortCode = record.ShortCode,
+            dateCreated = record.DateCreated,
+            createdBy = record.CreatedBy
+        });
     }
 
     [HttpGet("{code}")]
@@ -42,12 +53,21 @@ public class UrlController : ControllerBase
     }
 
     [HttpGet("history")]
-    [Authorize]
     public async Task<IActionResult> GetHistory()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var records = await _urlService.GetUrlsByUserIdAsync(userId);
-        return Ok(records);
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Unauthorized();
+
+        if (await _userManager.IsInRoleAsync(user, "Admin"))
+        {
+            var allUrls = await _urlService.GetAllUrlsAsync();
+            return Ok(allUrls);
+        }
+        else
+        {
+            var userUrls = await _urlService.GetUrlsByUserIdAsync(user.Id);
+            return Ok(userUrls);
+        }
     }
     
     [HttpGet("/go/{code}")]
@@ -62,5 +82,39 @@ public class UrlController : ControllerBase
         }
 
         return Redirect(originalUrl);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUrl(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+
+        if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+        var isDeleted = await _urlService.DeleteUrlAsync(id, userId);
+
+        if (!isDeleted)
+        {
+            return BadRequest("Unable to delete URL (not found or access denied).");
+        }
+
+        return NoContent();
+    }
+    
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetUrlDetails(int id)
+    {
+        var record = await _urlService.GetUrlByIdAsync(id);
+
+        if (record == null) return NotFound();
+        
+        return Ok(new 
+        {
+            id = record.Id,
+            originalUrl = record.OriginalUrl,
+            shortCode = record.ShortCode,
+            dateCreated = record.DateCreated,
+            createdBy = record.CreatedBy
+        });
     }
 }

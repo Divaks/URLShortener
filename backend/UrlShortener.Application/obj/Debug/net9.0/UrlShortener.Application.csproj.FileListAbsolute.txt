@@ -13,3 +13,4 @@
 /Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/refint/UrlShortener.Application.dll
 /Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.pdb
 /Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/ref/UrlShortener.Application.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Application/obj/Debug/net9.0/UrlShortener.Application.sourcelink.json

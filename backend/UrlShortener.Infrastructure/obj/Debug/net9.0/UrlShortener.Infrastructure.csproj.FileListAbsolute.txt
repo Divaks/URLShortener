@@ -17,3 +17,4 @@
 /Users/dmytro/URLShortener/backend/UrlShortener.Infrastructure/obj/Debug/net9.0/UrlShortener.Infrastructure.pdb
 /Users/dmytro/URLShortener/backend/UrlShortener.Infrastructure/obj/Debug/net9.0/UrlShortener.Infrastructure.genruntimeconfig.cache
 /Users/dmytro/URLShortener/backend/UrlShortener.Infrastructure/obj/Debug/net9.0/ref/UrlShortener.Infrastructure.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Infrastructure/obj/Debug/net9.0/UrlShortener.Infrastructure.sourcelink.json

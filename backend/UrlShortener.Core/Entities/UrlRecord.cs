@@ -8,4 +8,5 @@ public class UrlRecord
     public DateTime DateCreated { get; set; }
     public required string UserId { get; set; }
     public required string CreatedBy { get; set; }
+    public int ClickCount { get; set; } = 0;
 }

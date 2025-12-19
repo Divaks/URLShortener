@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.Core.Entities;
@@ -5,43 +6,51 @@ using UrlShortener.Web.Models;
 
 namespace UrlShortener.Web.Controllers;
 
-public class AccountController : Controller
+[ApiController]
+[Route("api/[controller]")]
+public class AccountController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _roleManager = roleManager;
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Register(RegisterViewModel model)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        if (ModelState.IsValid)
+        var existingUser = await _userManager.FindByEmailAsync(request.Email);
+        if (existingUser != null)
         {
-            var user  = new User { UserName = model.Email, Email = model.Email };
-            
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+            return BadRequest("Користувач з таким email вже існує.");
         }
-        
-        return View(model);
+
+        var user = new User
+        {
+            UserName = request.Email,
+            Email = request.Email
+        };
+
+        var result = await _userManager.CreateAsync(user, request.Password);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        await _signInManager.SignInAsync(user, isPersistent: true);
+
+        return Ok(new { message = "Реєстрація успішна!" });
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Login(LoginViewModel model)
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult> Login([FromBody] LoginViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -50,25 +59,43 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return Ok(new { msg = "Success" });
             }
             
-            ModelState.AddModelError(string.Empty, "Invalid login or password.");
+            return BadRequest("Користувача не знайдено.");
         }
-        
-        return View(model);
+
+        return BadRequest(ModelState);
     }
 
-    [HttpPost]
+    [HttpPost("logout")]
     public async Task<ActionResult> LogOut()
     {
         await _signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Home");
+        return Ok(new { msg = "Success" });
     }
     
-    [HttpGet]
-    public IActionResult Register() => View();
+    [HttpGet("test")]
+    [AllowAnonymous]
+    public IActionResult Test() => Ok("API works");
+    
+    [HttpPost("make-me-admin")]
+    [Authorize]
+    public async Task<IActionResult> MakeMeAdmin()
+    {
+        if (!await _roleManager.RoleExistsAsync("Admin"))
+        {
+            await _roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
 
-    [HttpGet]
-    public IActionResult Login() => View();
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Unauthorized();
+
+        await _userManager.AddToRoleAsync(user, "Admin");
+
+        await _signInManager.SignOutAsync();
+        await _signInManager.SignInAsync(user, isPersistent: true);
+
+        return Ok(new { message = "Вітаю! Ви тепер Адміністратор. (Куки оновлено)" });
+    }
 }

@@ -196,3 +196,4 @@
 /Users/dmytro/URLShortener/backend/UrlShortener.Web/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/dmytro/URLShortener/backend/UrlShortener.Web/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /Users/dmytro/URLShortener/backend/UrlShortener.Web/obj/Debug/net9.0/UrlShortener.Web.MvcApplicationPartsAssemblyInfo.cs
+/Users/dmytro/URLShortener/backend/UrlShortener.Web/obj/Debug/net9.0/UrlShortener.Web.sourcelink.json

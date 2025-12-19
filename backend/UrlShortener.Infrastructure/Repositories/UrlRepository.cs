@@ -36,7 +36,44 @@ public class UrlRepository : IUrlRepository
     
     public async Task<List<UrlRecord>> GetUrlsByUserIdAsync(string userId)
     {
-        var records = await _context.UrlRecords.ToListAsync();
-        return records;
+        return await _context.UrlRecords
+            .AsNoTracking()
+            .Where(r => r.UserId == userId)
+            .OrderByDescending(r => r.DateCreated)
+            .ToListAsync();
+    }
+
+    public async Task<UrlRecord?> GetUrlByIdAsync(int id)
+    {
+        return await _context.UrlRecords.FirstOrDefaultAsync(r => r.Id == id);
+    }
+
+    public async Task DeleteAsync(UrlRecord record)
+    {
+        _context.UrlRecords.Remove(record);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<List<UrlRecord>> GetAllUrlsAsync()
+    {
+        return await _context.UrlRecords
+            .AsNoTracking()
+            .OrderByDescending(r => r.DateCreated)
+            .ToListAsync();
+    }
+    
+    public async Task<UrlRecord?> GetByCodeAsync(string code)
+    {
+        return await _context.UrlRecords.FirstOrDefaultAsync(u => u.ShortCode == code);
+    }
+
+    public async Task IncrementClickCountAsync(int id)
+    {
+        var record = await _context.UrlRecords.FindAsync(id);
+        if (record != null)
+        {
+            record.ClickCount++;
+            await _context.SaveChangesAsync();
+        }
     }
 }

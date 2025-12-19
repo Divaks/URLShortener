@@ -1,0 +1,58 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="card-header">
+      <h2>Ласкаво просимо</h2>
+      <p>Увійдіть, щоб керувати посиланнями</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="name@example.com"
+          [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        >
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <small class="error-text">Введіть коректний email</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Ваш пароль"
+          [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        >
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <small class="error-text">Пароль обов'язковий</small>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn-primary">
+        {{ isLoading ? 'Входимо...' : 'Увійти' }}
+      </button>
+
+      <div class="divider">
+        <span>або</span>
+      </div>
+
+      <a routerLink="/register" class="btn-secondary">
+        Створити новий акаунт
+      </a>
+
+    </form>
+  </div>
+</div>

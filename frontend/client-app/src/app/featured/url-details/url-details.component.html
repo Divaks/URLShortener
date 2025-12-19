@@ -1,0 +1,52 @@
+<div class="details-wrapper">
+
+  <div class="details-card">
+    <div class="card-header">
+      <button (click)="goBack()" class="back-link">← Назад до списку</button>
+      <h1>Деталі посилання</h1>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-state">Завантаження даних...</div>
+    }
+    @else if (error) {
+      <div class="error-state">
+        <p>{{ error }}</p>
+        <button (click)="goBack()">Повернутися</button>
+      </div>
+    }
+    @else if (url) {
+      <div class="info-grid">
+
+        <div class="info-group highlight-group">
+          <label>Короткий код</label>
+          <div class="big-code">{{ url.shortCode }}</div>
+          <a [href]="url.shortCode" target="_blank" class="visit-btn">Перейти ↗</a>
+        </div>
+
+        <div class="meta-data">
+          <div class="row">
+            <span class="label">Оригінальне посилання:</span>
+            <a [href]="url.originalUrl" target="_blank" class="value link">{{ url.originalUrl }}</a>
+          </div>
+
+          <div class="row">
+            <span class="label">Створено:</span>
+            <span class="value">{{ url.dateCreated | date:'medium' }}</span>
+          </div>
+
+          <div class="row">
+            <span class="label">Автор (ID):</span>
+            <span class="value mono">{{ url.createdBy || 'Невідомий' }}</span>
+          </div>
+
+          <div class="row">
+            <span class="label">ID запису:</span>
+            <span class="value">#{{ url.id }}</span>
+          </div>
+        </div>
+
+      </div>
+    }
+  </div>
+</div>

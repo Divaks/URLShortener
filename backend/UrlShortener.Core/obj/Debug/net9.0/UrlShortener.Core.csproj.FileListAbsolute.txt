@@ -10,3 +10,4 @@
 /Users/dmytro/URLShortener/backend/UrlShortener.Core/obj/Debug/net9.0/refint/UrlShortener.Core.dll
 /Users/dmytro/URLShortener/backend/UrlShortener.Core/obj/Debug/net9.0/UrlShortener.Core.pdb
 /Users/dmytro/URLShortener/backend/UrlShortener.Core/obj/Debug/net9.0/ref/UrlShortener.Core.dll
+/Users/dmytro/URLShortener/backend/UrlShortener.Core/obj/Debug/net9.0/UrlShortener.Core.sourcelink.json

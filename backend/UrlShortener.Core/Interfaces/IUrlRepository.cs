@@ -9,4 +9,9 @@ public interface IUrlRepository
     Task AddAsync(UrlRecord record);
     Task SaveChangesAsync();
     Task<List<UrlRecord>> GetUrlsByUserIdAsync(string userId);
+    Task<UrlRecord?> GetUrlByIdAsync(int id);
+    Task DeleteAsync(UrlRecord record);
+    Task<List<UrlRecord>> GetAllUrlsAsync();
+    Task<UrlRecord?> GetByCodeAsync(string code);
+    Task IncrementClickCountAsync(int id);
 }

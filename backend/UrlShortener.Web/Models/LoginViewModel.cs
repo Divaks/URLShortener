@@ -6,11 +6,11 @@ public class LoginViewModel
 {
     [Required(ErrorMessage = "Вкажіть пошту")]
     [EmailAddress]
-    public required string Email { get; set; }
+    public string Email { get; set; }
 
     [Required(ErrorMessage = "Введіть пароль")]
     [DataType(DataType.Password)]
-    public required string Password { get; set; }
+    public string Password { get; set; }
 
     [Display(Name = "Запам'ятати мене?")]
     public bool RememberMe { get; set; }

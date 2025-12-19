@@ -1,0 +1,162 @@
+/* Основний контейнер на весь екран */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Висота екрану мінус хедер/футер */
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Картка */
+.login-card {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* М'яка тінь */
+  border: 1px solid #eaeaea;
+}
+
+/* Заголовок */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.95rem;
+  }
+}
+
+/* Групи полів */
+.form-group {
+  margin-bottom: 1.25rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box; /* Важливо, щоб padding не ламав ширину */
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    &.invalid {
+      border-color: #dc3545;
+      background-color: #fff8f8;
+    }
+  }
+}
+
+/* Текст помилки під полем */
+.error-text {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Блок помилки сервера */
+.alert-error {
+  background-color: #fde8e8;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid #fbd5d5;
+}
+
+/* КНОПКИ */
+button, .btn-secondary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s, transform 0.1s;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Основна кнопка (Синя) */
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: #a0c4ff;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* Розділювач "або" */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #999;
+  font-size: 0.85rem;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eee;
+  }
+
+  span {
+    padding: 0 10px;
+  }
+}
+
+/* Другорядна кнопка (Сіра/Прозора) */
+.btn-secondary {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ddd;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #ccc;
+    color: #000;
+  }
+}

@@ -1,0 +1,111 @@
+<div class="dashboard-container">
+
+  <header class="top-bar">
+    <div class="brand">
+      <span class="icon">🔗</span>
+      <h1>URL Shortener</h1>
+    </div>
+
+    @if (isLoggedIn) {
+      <div class="user-info">
+        <span class="user-badge">{{ currentUserEmail }}</span>
+        <button (click)="logout()" class="btn-logout">Вийти 🚪</button>
+      </div>
+    } @else {
+      <a routerLink="/login" class="btn-login">Увійти в систему 🔑</a>
+    }
+  </header>
+
+  @if (isLoggedIn) {
+    <section class="create-section">
+      <div class="input-card">
+        <h2>Створити нове посилання</h2>
+        <div class="input-group">
+          <input
+            type="text"
+            [formControl]="urlInput"
+            placeholder="Вставте довге посилання (https://...)"
+            [class.error]="urlInput.invalid && urlInput.touched"
+          />
+          <button
+            (click)="onShorten()"
+            [disabled]="urlInput.invalid || isLoading"
+          >
+            {{ isLoading ? '✂️ Обробка...' : 'Скоротити' }}
+          </button>
+        </div>
+
+        @if (errorMessage) {
+          <div class="alert-error">{{ errorMessage }}</div>
+        }
+        @if (urlInput.invalid && urlInput.touched) {
+          <small class="text-error">Посилання має починатися з http:// або https://</small>
+        }
+      </div>
+    </section>
+  }
+
+  <section class="history-section">
+    <h2>Всі посилання</h2>
+
+    @if (urls.length === 0 && !isLoading) {
+      <div class="empty-state">
+        <p>Список порожній.</p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table>
+          <thead>
+          <tr>
+            <th style="width: 35%">Оригінал</th>
+            <th style="width: 20%">Коротке</th>
+            <th style="width: 20%">Власник</th>
+            <th style="width: 10%">Кліки</th>
+            <th style="width: 15%">Дата</th>
+            @if (isLoggedIn) {
+              <th>Дії</th>
+            }
+          </tr>
+          </thead>
+          <tbody>
+            @for (url of urls; track url.id) {
+              <tr>
+                <td class="col-original">
+                  <div class="truncate">
+                    <a [href]="url.originalUrl" target="_blank">{{ url.originalUrl }}</a>
+                  </div>
+                </td>
+
+                <td class="col-short">
+                  <a [href]="redirectBaseUrl + url.shortCode" target="_blank" class="short-pill">
+                    {{ url.shortCode }} ↗
+                  </a>
+                </td>
+
+                <td class="col-user">
+                  <span class="user-label">{{ url.createdBy || 'Анонім' }}</span>
+                </td>
+
+                <td class="col-clicks">
+                  {{ url.clickCount }} 👀
+                </td>
+
+                <td class="col-date">{{ url.dateCreated | date:'dd.MM.yyyy' }}</td>
+
+                @if (isLoggedIn) {
+                  <td class="col-actions">
+                    <a [routerLink]="['/urls', url.id]" class="btn-icon info" title="Деталі">ℹ️</a>
+
+                    @if (canDelete(url)) {
+                      <button class="btn-icon delete" (click)="onDelete(url.id)" title="Видалити">🗑</button>
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</div>

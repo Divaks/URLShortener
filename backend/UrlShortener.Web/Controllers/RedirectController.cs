@@ -24,7 +24,6 @@ public class RedirectController : ControllerBase
             return NotFound("Посилання не знайдено 🕵️‍♂️");
         }
 
-        // І робить редірект
         return Redirect(originalUrl);
     }
 }
